@@ -1,18 +1,11 @@
 "use client"
 import React, { useState } from 'react'
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion"
 import { ScrollArea } from '@/components/ui/scroll-area'
 import { ChevronDown, ChevronRight, Hash, AlignLeft, Box, Layers, ToggleLeft, ToggleRight, Trash } from 'lucide-react'
 import { cn } from "@/lib/utils"
 import { Button } from '@/components/ui/button'
 import { deleteContent } from '../handler/apiHandler'
 
-// Función para determinar el tipo de un valor
 const getValueType = (value: any): string => {
   if (value === null) return 'null';
   if (Array.isArray(value)) return 'array';
@@ -20,10 +13,8 @@ const getValueType = (value: any): string => {
 }
 
 
-// Componente para mostrar un valor según su tipo
-function JsonValue({ value, indentLevel = 0, parsedData, apiName }: { value: any, indentLevel?: number, parsedData: any, apiName: string }) {
+function JsonValue({ value, indentLevel = 0, parsedData, apiName }: { value: any, indentLevel?: number, parsedData?: any, apiName?: string }) {
   const type = getValueType(value);
-  // Estilo para los diferentes tipos de valores
   const valueStyles = {
     string: "text-green-500 dark:text-green-400",
     number: "text-blue-500 dark:text-blue-400",
@@ -36,7 +27,7 @@ function JsonValue({ value, indentLevel = 0, parsedData, apiName }: { value: any
 
   if (type === 'array' && value.length > 0) {
     return (
-      <JsonArray array={value} indentLevel={indentLevel} parsedData={parsedData} apiName={apiName} />
+      <JsonArray array={value} indentLevel={indentLevel} parsedData={parsedData} apiName={apiName ?? ''} />
     );
   } else if (type === 'object' && value !== null && Object.keys(value).length > 0) {
     return (
@@ -64,7 +55,6 @@ function JsonValue({ value, indentLevel = 0, parsedData, apiName }: { value: any
   }
 }
 
-// Componente para mostrar un objeto
 function JsonObject({ object, indentLevel = 0 }: { object: Record<string, any>, indentLevel?: number }) {
   const [expandedKeys, setExpandedKeys] = useState<Record<string, boolean>>({});
   const keys = Object.keys(object);
@@ -139,7 +129,6 @@ function JsonObject({ object, indentLevel = 0 }: { object: Record<string, any>, 
   );
 }
 
-// Componente para mostrar un array
 function JsonArray({ array, indentLevel = 0, parsedData, apiName }: { array: any[], indentLevel?: number, parsedData?: any , apiName: string }) {
   const [expandedIndices, setExpandedIndices] = useState<Record<number, boolean>>({});
 
@@ -182,7 +171,7 @@ const handleDeleteContent = async (index: string, apiName: string) => {
               <div className="flex-1">
                 <span className="font-medium text-blue-500 dark:text-blue-400">[{index}]</span>
                 <span className="text-muted-foreground mx-1">:</span>
-                <Button onClick={() => handleDeleteContent(index, apiName)} variant={"outline"} className='w-6 h-6'>
+                <Button onClick={() => handleDeleteContent(index.toString(), apiName)} variant={"outline"} className='w-6 h-6'>
                   <Trash className='w-5 h-5' />
                   </Button>
                 {isExpandable ? (
@@ -217,7 +206,6 @@ const handleDeleteContent = async (index: string, apiName: string) => {
   );
 }
 
-// Componente principal
 function ViewJSON({dataContent, dataUser, apiName}: any) {
   let parsedData: any;
   let hasError = false;
@@ -241,7 +229,7 @@ function ViewJSON({dataContent, dataUser, apiName}: any) {
             {Array.isArray(parsedData) ? (
               <div className="flex items-center gap-1 mb-2 text-muted-foreground">
                 <Layers className="h-4 w-4" /> 
-                <span>Array principal [{parsedData.length} elementos]</span>
+                <span>Main array [{parsedData.length} elements]</span>
               </div>
             ) : typeof parsedData === 'object' && parsedData !== null ? (
               <div className="flex items-center gap-1 mb-2 text-muted-foreground">

@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-const { unique } = require('next/dist/build/utils');
 
 const userSchema = new mongoose.Schema({
   username: {

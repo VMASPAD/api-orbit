@@ -1,4 +1,3 @@
-import Image from "next/image";
 import Aurora from "./blocks/Backgrounds/Aurora/Aurora";
 import Hero from "./sections/Hero";
 import HeroVideoDialog from "@/components/magicui/hero-video-dialog";
@@ -9,16 +8,14 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel"
-import { BentoCard, BentoGrid } from "@/components/magicui/bento-grid";
 import { Bento } from "./sections/Bento";
-import { Footer } from "./sections/Footer";
 import { GridPattern } from "@/components/magicui/grid-pattern";
 import { cn } from "@/lib/utils";
 export default function Home() {
   return (
     <main className="max-w-screen">
-      <section className=" h-screen bg-black relative" >
-        <div className="absolute inset-0">
+      <section className="h-screen bg-black relative" >
+        <div className="absolute inset-0 top-0">
           <Aurora />
         </div>
         <div className="relative z-10 flex items-center justify-center h-full">
@@ -27,7 +24,7 @@ export default function Home() {
       </section>
       <section className="flex flex-col items-center justify-center mb-20">
         <div className="relative flex flex-col size-full items-center justify-center overflow-hidden rounded-lg bg-background p-20">
-          <p className="text-7xl font-bold z-20">The next app </p>
+          <p className="text-7xl font-bold z-20">Build APIs</p>
           <br />
           <div className="w-4xl">
             <HeroVideoDialog
@@ -49,45 +46,50 @@ export default function Home() {
         </div>
 
       </section>
-      <section className="max-w-screen flex flex-col items-center justify-center ">
-        <p className="text-7xl font-bold">The next app </p>
-        <br />
-        <Carousel>
-          <CarouselContent className="w-2xl h-2xl">
-            <CarouselItem >
-              <img
-                src="https://placehold.co/600x400"
-                alt="Image"
-                className="object-cover w-full h-full rounded-2xl"
-              />
-
+      <section className="max-w-screen flex flex-col items-center justify-center py-16">
+        <p className="text-7xl font-bold mb-8">Preview </p>
+        <div className="w-full max-w-5xl mx-auto px-4">
+          <Carousel className="w-full" 
+          opts={{
+          align: "center", 
+        }}>
+          <CarouselContent className="w-full max-w-4xl">
+            <CarouselItem className="flex items-center justify-center p-4">
+              <div className="h-[400px] w-full flex items-center justify-center">
+                <img
+                  src="/img (1).png"
+                  alt="Image"
+                  className="object-contain max-h-full max-w-full rounded-2xl"
+                />
+              </div>
             </CarouselItem>
-            <CarouselItem >
-              <img
-                src="https://placehold.co/600x400"
-                alt="Image"
-                className="object-cover w-full h-full rounded-2xl"
-              />
-
+            <CarouselItem className="flex items-center justify-center p-4">
+              <div className="h-[400px] w-full flex items-center justify-center">
+                <img
+                  src="/img (2).png"
+                  alt="Image"
+                  className="object-contain max-h-full max-w-full rounded-2xl"
+                />
+              </div>
             </CarouselItem>
-            <CarouselItem >
-              <img
-                src="https://placehold.co/600x400"
-                alt="Image"
-                className="object-cover w-full h-full rounded-2xl"
-              />
-
+            <CarouselItem className="flex items-center justify-center p-4">
+              <div className="h-[400px] w-full flex items-center justify-center">
+                <img
+                  src="/img (3).png"
+                  alt="Image"
+                  className="object-contain max-h-full max-w-full rounded-2xl"
+                />
+              </div>
             </CarouselItem>
           </CarouselContent>
           <CarouselPrevious />
           <CarouselNext />
         </Carousel>
-
+        </div>
       </section>
       <section >
         <Bento />
       </section>
-      <Footer />
     </main>
   );
 }

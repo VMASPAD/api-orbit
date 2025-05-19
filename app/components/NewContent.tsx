@@ -20,8 +20,8 @@ function NewContent({ api, userRaw }: { api?: any, userRaw?: any }) {
     const [isOpen, setIsOpen] = useState(false);
     const [isSaving, setIsSaving] = useState(false);
     const [contentData, setContentData] = useState<any>({}); // Initialize with an empty object or appropriate default value
-    const handleGetContentApi = async (api) => {
-        console.log("API data:", JSON.parse(api, null, 2));
+    const handleGetContentApi = async (api: string) => {
+        console.log("API data:", JSON.parse(api));
         setContentData(JSON.parse(api));
     }
     const handleSendData = async () => {

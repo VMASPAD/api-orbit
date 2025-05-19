@@ -8,7 +8,7 @@ app.use(cors())
 app.use(express.json());
 const connectDB = async () => {
   try {
-    const connection = await mongoose.connect('mongodb://localhost:27017/orbit-db', {
+    const connection = await mongoose.connect('mongodb+srv://api-orbit:api-orbit@api-orbit.oh9qzjq.mongodb.net/', {
       useNewUrlParser: true,
       useUnifiedTopology: true,
     });

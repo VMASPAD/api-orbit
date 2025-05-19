@@ -32,6 +32,7 @@ import Editor from '@monaco-editor/react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import ViewJSON from './ViewJSON'
 import { Trash2Icon } from 'lucide-react'
+import ConnectApi from './ConnectApi'
 
 function ViewApis({ userRaw }: any) {
   const [apiData, setApiData] = useState<any>({});
@@ -65,7 +66,7 @@ function ViewApis({ userRaw }: any) {
       }
     }
   };
-  const handleDeleteApi = async (apiName) => { 
+  const handleDeleteApi = async (apiName: string) => { 
     const api = await deleteApi(apiName, userRaw.primaryEmailAddressId, userRaw.email, userRaw.id)
     console.log(api)
   };
@@ -157,12 +158,16 @@ function ViewApis({ userRaw }: any) {
                                   <TabsList>
                                     <TabsTrigger value="JSON">View JSON</TabsTrigger>
                                     <TabsTrigger value="Editor">Text JSON</TabsTrigger>
+                                    <TabsTrigger value="Preview">Connect API</TabsTrigger>
                                   </TabsList>
                                   <TabsContent value="JSON">
                                     <ViewJSON dataContent={JSON.stringify(api.content || [], null, 2)} dataUser={userRaw} apiName={api.name} />
                                   </TabsContent>
                                   <TabsContent value="Editor">
                                     <Editor height="90vh" options={{ readOnly: true }} width="90vh" theme="vs-dark" defaultLanguage="json" defaultValue={JSON.stringify(api.content || [], null, 2)} />
+                                  </TabsContent>
+                                  <TabsContent value="Preview">
+                                    <ConnectApi apiName={api.name} dataUser={userRaw}/>
                                   </TabsContent>
                                 </Tabs>
                               </div>

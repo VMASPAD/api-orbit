@@ -312,7 +312,7 @@ function PropertyEditor({ property, onChange, onDelete }: {
     );
 }
 
-function TableContent({handleGetDataApi}) {
+function TableContent({ handleGetDataApi }: { handleGetDataApi: (data: string) => void }) {
     // Estado para el objeto que se está construyendo
     const [objectName, setObjectName] = useState('myObject');
     const [properties, setProperties] = useState<Property[]>([]);
