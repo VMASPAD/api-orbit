@@ -1,3 +1,4 @@
+"use client"
 import React, { useState } from 'react'
 import { motion } from "framer-motion"
 import {
@@ -10,49 +11,45 @@ import {
     DialogFooter,
 } from "@/components/ui/dialog"
 import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
-import { Label } from "@/components/ui/label"
-import { Textarea } from "@/components/ui/textarea" // You'll need to create this component if not already present
-
-
 import { FilePlus, Plus } from 'lucide-react'
 import TableContent from './TableContent'
+import { postNewContent } from '../handler/apiHandler'
+import { toast } from 'sonner'
 
-function NewContent({ api }: { api?: any }) {
-    const [contentName, setContentName] = useState("");
-    const [contentDescription, setContentDescription] = useState("");
-    const [contentType, setContentType] = useState("json");
+function NewContent({ api, userRaw }: { api?: any, userRaw?: any }) {
     const [isOpen, setIsOpen] = useState(false);
     const [isSaving, setIsSaving] = useState(false);
-
+    const [contentData, setContentData] = useState<any>({}); // Initialize with an empty object or appropriate default value
+    const handleGetContentApi = async (api) => {
+        console.log("API data:", JSON.parse(api, null, 2));
+        setContentData(JSON.parse(api));
+    }
     const handleSendData = async () => {
-        if (!contentName.trim()) return;
-
-        setIsSaving(true);
         try {
-            // Here you'd implement the actual data saving
-            console.log("Saving content:", { api, contentName, contentDescription, contentType });
+            setIsSaving(true);
+            const getContent = contentData
+            console.log(getContent)
 
-            // Simulate API call delay
-            await new Promise(resolve => setTimeout(resolve, 800));
-
-            // Reset form and close dialog
-            setContentName("");
-            setContentDescription("");
-            setIsOpen(false);
+            const postData = await postNewContent(api, contentData, userRaw.primaryEmailAddressId, userRaw.email, userRaw.id);
+            if (!postData) {
+                toast.error('Failed to create event')
+            } else if (!postData.success) {
+                // Handle all types of errors (connection errors, HTTP errors)
+                toast.error(postData.message || 'An unknown error occurred')
+                console.error('Error response:', postData)
+            } else {
+                console.log(postData)
+                toast.success(postData.message)
+                setIsOpen(false) // Close the dialog on success
+            }
         } catch (error) {
-            console.error("Error saving content:", error);
+            // Handle any unexpected errors
+            console.error('Unexpected error:', error);
+            toast.error('An unexpected error occurred')
         } finally {
             setIsSaving(false);
         }
     }
-
-    const contentTypes = [
-        { id: "json", label: "JSON" },
-        { id: "text", label: "Text" },
-        { id: "html", label: "HTML" },
-        { id: "markdown", label: "Markdown" }
-    ];
 
     return (
         <div>
@@ -69,7 +66,7 @@ function NewContent({ api }: { api?: any }) {
                         </Button>
                     </motion.div>
                 </DialogTrigger>
-                <DialogContent className="sm:max-w-lg bg-card border border-border shadow-md">
+                <DialogContent className="bg-card border border-border shadow-md">
                     <motion.div
                         initial={{ opacity: 0, y: -20 }}
                         animate={{ opacity: 1, y: 0 }}
@@ -87,7 +84,7 @@ function NewContent({ api }: { api?: any }) {
                             </DialogDescription>
                         </DialogHeader>
                         <div className="my-6 space-y-4">
-                            <TableContent />
+                            <TableContent handleGetDataApi={handleGetContentApi} />
                         </div>
                         <DialogFooter className="sm:justify-end gap-2">
                             <Button
@@ -96,21 +93,12 @@ function NewContent({ api }: { api?: any }) {
                                 className="border-border text-muted-foreground hover:bg-muted hover:text-foreground"
                             >
                                 Cancel
-                            </Button>
-                            <Button
+                            </Button>                            <Button
                                 onClick={handleSendData}
-                                disabled={isSaving || !contentName.trim()}
-                                className={`bg-primary hover:bg-primary/90 text-primary-foreground ${isSaving ? 'opacity-70' : ''}`}
+                                disabled={isSaving}
+                                className={`bg-primary hover:bg-primary/90 text-primary-foreground `}
                             >
-                                {isSaving ? (
-                                    <div className="flex items-center gap-2">
-                                        <svg className="animate-spin h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                                            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                                            <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                                        </svg>
-                                        Saving...
-                                    </div>
-                                ) : "Save Content"}
+                                {isSaving ? 'Saving...' : 'Save Content'}
                             </Button>
                         </DialogFooter>
                     </motion.div>

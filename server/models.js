@@ -15,9 +15,12 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  apis:{
-    type: Array,
-  },
+  apis: [
+    {
+      name: String,
+      content: [mongoose.Schema.Types.Mixed]
+    }
+  ],
   createdAt: {
     type: Date,
     default: Date.now

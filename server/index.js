@@ -28,20 +28,48 @@ app.get('/api/content', async (req, res) => {
   try {
     const { username, email, password } = req.headers;
     const existingUser = await User.findOne({ username, password });
-    console.log(existingUser);
     return res.status(200).json({ message: 'Your Apis', apis: existingUser.apis });
   } catch (error) {
     console.error(`Error: ${error.message}`);
     res.status(500).json({ message: 'Internal Server Error' });
   }
 });
+app.get('/api/contentName', async (req, res) => {
+  const { username, email, password, nameApi } = req.body;
+  const existingUser = await User.findOne({ username, password });
+
+});
 
 app.post('/api/newContent', async (req, res) => {
-  const { username, email, password, nameApi, content } = req.body;
-  const existingUser = await User.findOne({ username, password });
-  const newContent = content
-  
-  
+  try {
+    const { username, email, password, nameApi, content } = req.body;
+    const existingUser = await User.findOne({ username, password });
+    
+    if (!existingUser) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+    
+    // Buscar la API por su nombre
+    const apiIndex = existingUser.apis.findIndex(api => api.name === nameApi);
+    
+    if (apiIndex === -1) {
+      return res.status(404).json({ message: 'API not found' });
+    }
+    
+    // Agregar el contenido al array de content de la API específica
+    existingUser.apis[apiIndex].content.push(content);
+    
+    // Guardar los cambios
+    const saveData = await existingUser.save();
+    console.log(saveData);
+    return res.status(200).json({ 
+      message: 'Content added successfully', 
+      api: existingUser.apis[apiIndex] 
+    });
+  } catch (error) {
+    console.error(`Error: ${error.message}`);
+    res.status(500).json({ message: 'Internal Server Error' });
+  }
 });
 
 app.post('/api/new', async (req, res) => {
@@ -92,6 +120,48 @@ app.post('/api/user', async (req, res) => {
     }
     res.status(500).json({ message: 'Internal Server Error' });
   }
+});
+app.delete('/api/deleteApi', async (req, res) => {
+    const { username, email, password, nameapi } = req.headers; 
+    const existingUser = await User.findOne({ username, password });
+   if (!existingUser) {
+     return res.status(404).json({ message: 'User not found' });
+   }
+   existingUser.apis = existingUser.apis.filter(api => api.name !== nameapi);
+   await existingUser.save();
+   res.status(200).json({ message: 'API deleted successfully' });
+});
+app.delete('/api/deleteContent', async (req, res) => {
+    const { username, email, password, nameapi, contentid } = req.headers; 
+    const existingUser = await User.findOne({ username, password });
+    console.log({ username, email, password, nameapi, contentid })
+    if (!existingUser) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+    
+    // Encontrar la API por su nombre
+    const apiIndex = existingUser.apis.findIndex(api => api.name === nameapi);
+    
+    if (apiIndex === -1) {
+      return res.status(404).json({ message: 'API not found' });
+    }
+    
+    // Eliminar el contenido específico usando el ID o algún criterio único
+    if (contentid !== undefined) {
+      // Asumimos que contentid es el índice del elemento en el array de content
+      if (contentid >= 0 && contentid < existingUser.apis[apiIndex].content.length) {
+        existingUser.apis[apiIndex].content.splice(contentid, 1);
+        await existingUser.save();
+        return res.status(200).json({ 
+          message: 'Content deleted successfully',
+          api: existingUser.apis[apiIndex]
+        });
+      } else {
+        return res.status(400).json({ message: 'Invalid content ID' });
+      }
+    } else {
+      return res.status(400).json({ message: 'Content ID is required' });
+    }
 });
 
 app.listen(port, () => {

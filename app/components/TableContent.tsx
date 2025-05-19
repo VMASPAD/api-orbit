@@ -1,3 +1,4 @@
+"use client"
 import React, { useState, useEffect } from 'react'
 import {
     Command,
@@ -32,6 +33,7 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion"
 import { toast } from 'sonner'
+import { ScrollArea } from '@/components/ui/scroll-area'
 
 // Tipos de datos disponibles
 const dataTypes = [
@@ -310,7 +312,7 @@ function PropertyEditor({ property, onChange, onDelete }: {
     );
 }
 
-function TableContent() {
+function TableContent({handleGetDataApi}) {
     // Estado para el objeto que se está construyendo
     const [objectName, setObjectName] = useState('myObject');
     const [properties, setProperties] = useState<Property[]>([]);
@@ -323,6 +325,7 @@ function TableContent() {
         if (saved) {
             try {
                 setSavedObjects(JSON.parse(saved));
+
             } catch (e) {
                 console.error("Error loading saved objects:", e);
             }
@@ -391,6 +394,7 @@ function TableContent() {
     useEffect(() => {
         const output = generateJsonOutput(properties);
         setJsonOutput(output);
+        handleGetDataApi(output);
     }, [properties]);
 
     // Guardar el objeto actual en localStorage
@@ -455,7 +459,7 @@ function TableContent() {
                     Save
                 </Button>
             </div>
-            
+            <ScrollArea className="h-96 rounded-md border p-4">
             {/* Propiedades del objeto */}
             <div className="mb-4">
                 <h3 className="text-lg font-semibold mb-2">Properties</h3>
@@ -476,7 +480,7 @@ function TableContent() {
                     Add Property
                 </Button>
             </div>
-            
+            </ScrollArea>
             {/* Objetos guardados */}
             {savedObjects.length > 0 && (
                 <div className="mb-4">

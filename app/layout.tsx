@@ -12,6 +12,8 @@ import './globals.css'
 import CreateApis from './components/CreateApis'
 import CreateApisWrapper from './Wrappers/CreateApisWrapper'
 import { Toaster } from 'sonner'
+import Link from 'next/link'
+import { Button } from '@/components/ui/button'
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -43,13 +45,21 @@ export default function RootLayout({
     <ClerkProvider>
       <html lang="en">
         <body className={` ${DMSans.variable} antialiased`}>
-          <Toaster />
-          <header className="flex justify-end items-center p-4 gap-4 h-16">
+          <Toaster richColors/>
+          <header className="flex justify-end items-center p-4 gap-4 h-16 bg-background ">
             <SignedOut>
               <SignInButton />
               <SignUpButton />
             </SignedOut>
             <SignedIn>
+              <Button
+          variant="default" 
+          className="bg-primary text-primary-foreground font-medium shadow-md border-0"
+        >
+               <Link href="/dashboard">
+           Dashboard
+         </Link>
+         </Button>
               <CreateApisWrapper />
               <UserButton />
             </SignedIn>

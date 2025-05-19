@@ -16,6 +16,7 @@ import { Button } from '@/components/ui/button'
 import { Input } from "@/components/ui/input"
 import { createApi } from '../handler/apiHandler'
 import { Plus } from 'lucide-react'
+import { toast } from 'sonner'
 
 
 const CreateApis = ({ userRaw }: any) => {
@@ -25,7 +26,7 @@ const CreateApis = ({ userRaw }: any) => {
 
   const handleSendData = async () => {
     if (!apiName.trim()) return;
-    
+    toast.success('API created successfully (Reload Page to see changes)');
     setIsCreating(true);
     try {
       console.log(userRaw);

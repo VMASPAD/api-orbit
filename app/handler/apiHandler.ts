@@ -21,7 +21,7 @@ export const User = async (username: string, email: string, id: string, nameUser
         return data;
     } catch (error) {
         console.error("Error creating user:", error);
-        throw error;
+        return error;
     }
 }
 
@@ -43,11 +43,6 @@ export const createApi = async (apiName: string, username: string, email: string
 }
 
 export const getApi = async (username: string, email: string, id: string) => {
-    const requestData = {
-        username: username,
-        email: email,
-        password: id,
-    }; 
     const response = await fetch(`${process.env.NEXT_PUBLIC_API_SERVER}/api/content`, {
         method: 'GET',
         headers: {
@@ -58,7 +53,6 @@ export const getApi = async (username: string, email: string, id: string) => {
         },
     });
     const data = await response.json();
-    console.log(data)
     return data;
 }
 
@@ -70,12 +64,61 @@ export const postNewContent = async (apiName: string, content: any, username: st
         nameApi: apiName,
         content: content
     }; 
-    const response = await fetch(`${process.env.NEXT_PUBLIC_API_SERVER}/api/newContent`, {
-        method: 'POST',
+    try {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_SERVER}/api/newContent`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(requestData),
+        });
+        
+        if (!response.ok) {
+            // For HTTP errors (non-200 responses)
+            return { 
+                success: false, 
+                message: `Error: ${response.status} ${response.statusText}` 
+            };
+        }
+        
+        const data = await response.json();
+        return { ...data, success: true };
+    } catch (error) {
+        // For network errors (like connection refused)
+        console.error('API call failed:', error);
+        return { 
+            success: false, 
+            message: 'Connection error: Cannot connect to server' 
+        };
+    }
+}
+
+export const deleteApi = async (apiName: string, username: string, email: string, id: string) => {
+    console.log(apiName, username, email, id)
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_SERVER}/api/deleteApi`, {
+        method: 'DELETE',
         headers: {
             'Content-Type': 'application/json',
+            "nameApi": apiName,
+            "username": username,
+            "email": email,
+            "password": id
         },
-        body: JSON.stringify(requestData),
+    });
+    const data = await response.json();
+    return data;
+}
+export const deleteContent =  async (apiName: string, username: string, email: string, id: string, indexContent: string) => {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_SERVER}/api/deleteContent`, {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json',
+            "nameApi": apiName,
+            "username": username,
+            "email": email,
+            "password": id,
+            "contentid": indexContent
+        }
     });
     const data = await response.json();
     return data;
