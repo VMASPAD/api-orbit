@@ -61,7 +61,6 @@ app.post('/api/newContent', async (req, res) => {
     
     // Guardar los cambios
     const saveData = await existingUser.save();
-    console.log(saveData);
     return res.status(200).json({ 
       message: 'Content added successfully', 
       api: existingUser.apis[apiIndex] 
@@ -134,7 +133,6 @@ app.delete('/api/deleteApi', async (req, res) => {
 app.delete('/api/deleteContent', async (req, res) => {
     const { username, email, password, nameapi, contentid } = req.headers; 
     const existingUser = await User.findOne({ username, password });
-    console.log({ username, email, password, nameapi, contentid })
     if (!existingUser) {
       return res.status(404).json({ message: 'User not found' });
     }

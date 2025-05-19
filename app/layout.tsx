@@ -52,8 +52,22 @@ export default function RootLayout({
           <Toaster richColors />
           <header className="flex justify-end items-center p-4 gap-4 h-16 fixed top-0 left-0 right-0 z-50">
             <SignedOut>
-              <SignInButton />
-              <SignUpButton />
+              <SignInButton>
+                <Button
+                  variant="default"
+                  className="bg-primary text-primary-foreground font-medium shadow-md border-0"
+                >
+                  Sign In
+                </Button>
+              </SignInButton>
+              <SignUpButton>
+                <Button
+                  variant="default"
+                  className="bg-primary text-primary-foreground font-medium shadow-md border-0"
+                >
+                  Sign Up
+                </Button>
+              </SignUpButton>
             </SignedOut>
             <SignedIn>
               <Button
