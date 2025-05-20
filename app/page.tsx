@@ -22,19 +22,8 @@ export default function Home() {
           <Hero />
         </div>
       </section>
-      <section className="flex flex-col items-center justify-center mb-20">
-        <div className="relative flex flex-col size-full items-center justify-center overflow-hidden rounded-lg bg-background p-20">
-          <p className="text-7xl font-bold z-20">Build APIs</p>
-          <br />
-          <div className="w-4xl">
-            <HeroVideoDialog
-              className=" dark:hidden z-20"
-              animationStyle="from-center"
-              videoSrc="https://www.youtube.com/embed/qh3NGpYRG3I?si=4rb-zSdDkVK9qxxb"
-              thumbnailSrc="https://startup-template-sage.vercel.app/hero-light.png"
-              thumbnailAlt="Hero Video"
-            />
-          </div>      <GridPattern
+      <section className="max-w-screen flex flex-col items-center justify-center"><div className="relative flex flex-col size-full items-center justify-center overflow-hidden rounded-lg bg-background p-20">
+          <GridPattern
             width={50}
             height={50}
             x={-1}
@@ -44,9 +33,6 @@ export default function Home() {
             )}
           />
         </div>
-
-      </section>
-      <section className="max-w-screen flex flex-col items-center justify-center py-16">
         <p className="text-7xl font-bold mb-8">Preview </p>
         <div className="w-full max-w-5xl mx-auto px-4">
           <Carousel className="w-full" 
