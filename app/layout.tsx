@@ -53,6 +53,7 @@ export default function RootLayout({
           <header className="flex justify-end items-center p-4 gap-4 h-16 fixed top-0 left-0 right-0 z-50">
             <SignedOut>
               <SignInButton>
+        <p className='bg-primary text-white rounded-md p-1'>This application uses free services, please wait for server response.</p>
                 <Button
                   variant="default"
                   className="bg-primary text-primary-foreground font-medium shadow-md border-0"
@@ -70,6 +71,7 @@ export default function RootLayout({
               </SignUpButton>
             </SignedOut>
             <SignedIn>
+         <p className='bg-primary text-white rounded-md p-1'>This application uses free services, please wait for server response.</p>
               <Button
                 variant="default"
                 className="bg-primary text-primary-foreground font-medium shadow-md border-0"
