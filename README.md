@@ -1,36 +1,36 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🙌 Que es API Orbit?
 
-## Getting Started
+**Api Orbit** es una plataforma moderna diseñada para facilitar la creación, gestión y visualización de APIs de manera intuitiva y eficiente. Con una interfaz atractiva y herramientas avanzadas, Api Orbit permite a desarrolladores y equipos técnicos optimizar su flujo de trabajo y centralizar la administración de sus servicios.
 
-First, run the development server:
+## ❓Para qué sirve API Orbit?
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+Api Orbit es una solución integral para el manejo de APIs, ofreciendo funcionalidades que van desde la creación y conexión de nuevas APIs, hasta la visualización de datos y la administración de usuarios. Su arquitectura modular y su diseño responsivo la hacen ideal tanto para proyectos personales como para equipos de desarrollo profesional.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🧩 Características principales
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- **Creación y gestión de APIs**: Crea, edita y administra tus APIs de forma sencilla desde un panel centralizado.
+- **Visualización de datos**: Consulta y analiza la información de tus APIs en tiempo real con tablas y gráficos interactivos.
+- **Componentes reutilizables**: Amplia biblioteca de componentes para acelerar el desarrollo y mantener la coherencia visual.
+- **Autenticación y seguridad**: Módulos para la gestión de usuarios y protección de datos.
+- **Fácil integración**: Compatible con múltiples servicios y fácil de desplegar en diferentes entornos.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+# 🔗 Enlaces
+Proyecto: https://api-orbit.vercel.app/
+Repositorio: https://github.com/VMASPAD/api-orbit
 
-## Learn More
+# 📷 Capturas
 
-To learn more about Next.js, take a look at the following resources:
+![Image](https://github.com/user-attachments/assets/8c12dc44-906b-4c5c-a634-d7d00ec6d996)
+![Image](https://github.com/user-attachments/assets/9bdf3dd7-bc93-4032-9485-015bd8422509)
+![Image](https://github.com/user-attachments/assets/3771010b-0549-4ec2-85aa-c144baa181d6)
+![Image](https://github.com/user-attachments/assets/5cf9ffba-66ba-474f-ae0d-86e060b37d2f)
+![Image](https://github.com/user-attachments/assets/4d3b1ca5-8f64-4ba4-b192-d62800e92de8)
+![Image](https://github.com/user-attachments/assets/225d8b29-89de-4e89-af4a-3b7041e77d8d)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+# 🔏 Uso de Clerk
+Clerk se uso para:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- Proteger el dashboard de gestión de API por autenticación.
+- Bloquear la API raíz para solo usarla en la página.
+- Identificar al usuario para la segmentación de las APIs
+- Llave de acceso a los datos guardados por el usuario
