@@ -56,11 +56,10 @@ import {
       className: "lg:col-start-3 lg:col-end-3 lg:row-start-2 lg:row-end-4",
     },
   ];
-  
   export function Bento() {
     return (
-        <div className="m-52">
-      <BentoGrid className="lg:grid-rows-3">
+        <div className="my-12 md:my-24 lg:my-32 mx-4 sm:mx-8 md:mx-16 lg:mx-32 xl:mx-52">
+      <BentoGrid className="grid-rows-auto md:grid-rows-auto lg:grid-rows-3">
         {features.map((feature) => (
           <BentoCard key={feature.name} {...feature} />
         ))}

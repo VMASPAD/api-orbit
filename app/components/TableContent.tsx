@@ -233,7 +233,6 @@ function PropertyEditor({ property, onChange, onDelete }: {
                 />
                 <DataTypeSelector value={property.type} onChange={handleTypeChange} />
                 
-                {/* Mostrar input según el tipo */}
                 {property.type === 'string' && (
                     <Input 
                         placeholder="Value" 
@@ -277,7 +276,6 @@ function PropertyEditor({ property, onChange, onDelete }: {
                 </Button>
             </div>
 
-            {/* Contenido anidado para arrays y objetos */}
             {(property.type === 'array' || property.type === 'object') && (
                 <Accordion type="single" collapsible className="ml-4">
                     <AccordionItem value="item-1">
@@ -460,7 +458,6 @@ function TableContent({ handleGetDataApi }: { handleGetDataApi: (data: string) =
                 </Button>
             </div>
             <ScrollArea className="h-96 rounded-md border p-4">
-            {/* Propiedades del objeto */}
             <div className="mb-4">
                 <h3 className="text-lg font-semibold mb-2">Properties</h3>
                 {properties.map(prop => (
@@ -481,7 +478,6 @@ function TableContent({ handleGetDataApi }: { handleGetDataApi: (data: string) =
                 </Button>
             </div>
             </ScrollArea>
-            {/* Objetos guardados */}
             {savedObjects.length > 0 && (
                 <div className="mb-4">
                     <h3 className="text-lg font-semibold mb-2">Saved Objects</h3>
@@ -508,7 +504,6 @@ function TableContent({ handleGetDataApi }: { handleGetDataApi: (data: string) =
                 </div>
             )}
             
-            {/* Vista previa del JSON */}
             <div className="bg-background p-4 rounded-md font-mono text-sm overflow-auto max-h-[400px] border border-border">
                 <pre className="w-full">{jsonOutput}</pre>
             </div>
